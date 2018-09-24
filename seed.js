@@ -9,15 +9,28 @@ const createData = () => {
     }).then((vegetable) => {
         console.log('saved', vegetable.name)
         return vegetable
-    })      
+    })
     // console.log(vegetable)
     // vegetable.save().then((vegetable) => {
     //     console.log('saved', vegetable.name)
     //     return vegetable
-    // })      
+    // })
 }
+const createPlot = (vegetable) => {
+  console.log('calling in then')
+  return Plot.create({
+      shaded: true,
+      size: 1
+  }).then((plot) => {
+      console.log('saved plot')
+
+  })
+
+}
+
 db.sync({force: true})
   .then(createData)
+  .then(createPlot)
   .catch(err => {
     console.log('Disaster! Something went wrong! ')
     console.log(err)
