@@ -1,14 +1,20 @@
 const  {db, Gardener, Vegetable, Plot} = require('./models')
 // debbuger
 const createData = () => {
-    console.log('calling in then')
+    console.log('created vegetable then')
     return Vegetable.create({
         name: 'carrot',
         color: 'orange',
         planted_on: new Date()
     }).then((vegetable) => {
-        console.log('saved', vegetable.name)
-        return vegetable
+        console.log('a vegateble')
+       return Plot.create({
+            shaded: true,
+            size: 1
+        }).then((plot)=>{
+            // console.log('plot', plot)
+            return vegetable.addPlot(plot)
+        })
     })
     // console.log(vegetable)
     // vegetable.save().then((vegetable) => {
@@ -28,9 +34,8 @@ const createPlot = (vegetable) => {
 
 }
 
-db.sync({force: true})
+db.sync({force: false})
   .then(createData)
-  .then(createPlot)
   .catch(err => {
     console.log('Disaster! Something went wrong! ')
     console.log(err)
